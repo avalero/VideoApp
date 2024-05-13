@@ -1,4 +1,5 @@
-import { MongoClient } from "mongodb";
+import { User, Video } from "./types.ts";
+import { Document, MongoClient } from "mongodb";
 
 async function connectToDatabase() {
   try {
@@ -18,23 +19,14 @@ async function connectToDatabase() {
   }
 }
 
-async function disconnectFromDatabase(client: MongoClient) {
-  try {
-    await client.close();
-    console.log("Disconnected from the database");
-  } catch (error) {
-    console.error("Error disconnecting from the database:", error);
-  }
-}
-
-async function getCollection(
+function getCollection<T extends Document>(
   client: MongoClient,
-  db: string,
+  dbname: string,
   collection: string
 ) {
   try {
-    const db = client.db("deno_fresh");
-    return db.collection(name);
+    const db = client.db(dbname);
+    return db.collection<T>(collection);
   } catch (error) {
     console.error("Error getting collection:", error);
   }
@@ -46,12 +38,24 @@ export const connectMongo = async () => {
     throw new Error("Error connecting to the database");
   }
 
-  const DB_NAME = Deno.env.get("DBNAME");
+  const DB_NAME = Deno.env.get("DB_NAME");
   if (!DB_NAME) {
     throw new Error("DBNAME environment variable not set");
   }
 
-  const UsersCollection = await getCollection(client, DB_NAME, "users");
+  const UsersCollection = await getCollection<UsersModel>(
+    client,
+    DB_NAME,
+    "users"
+  );
+  const VideosCollection = await getCollection<VideosModel>(
+    client,
+    DB_NAME,
+    "videos"
+  );
 
-  return { UsersCollection };
+  return { UsersCollection, VideosCollection };
 };
+
+export type UsersModel = Document & Omit<User, "id">;
+export type VideosModel = Document & Omit<Video, "id">;
