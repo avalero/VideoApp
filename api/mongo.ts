@@ -22,7 +22,7 @@ async function connectToDatabase() {
 function getCollection<T extends Document>(
   client: MongoClient,
   dbname: string,
-  collection: string
+  collection: string,
 ) {
   try {
     const db = client.db(dbname);
@@ -46,12 +46,12 @@ export const connectMongo = async () => {
   const UsersCollection = await getCollection<UsersModel>(
     client,
     DB_NAME,
-    "users"
+    "users",
   );
   const VideosCollection = await getCollection<VideosModel>(
     client,
     DB_NAME,
-    "videos"
+    "videos",
   );
 
   return { UsersCollection, VideosCollection };

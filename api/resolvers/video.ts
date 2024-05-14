@@ -7,7 +7,8 @@ export const getVideo = async (
     "/video/:userid/:videoid",
     { userid: string; videoid: string },
     ContextState
-  >
+  >,
+  next: () => Promise<unknown>,
 ) => {
   const { videoid } = ctx.params;
   const { userid } = ctx.params;
@@ -37,4 +38,5 @@ export const getVideo = async (
   };
 
   ctx.response.body = response;
+  return next();
 };

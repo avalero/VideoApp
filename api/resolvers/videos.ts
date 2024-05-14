@@ -4,7 +4,7 @@ import { ObjectId } from "mongodb";
 
 export const getVideos = async (
   ctx: RouterContext<"/videos/:userid", { userid: string }, ContextState>,
-  next: () => Promise<void>
+  next: () => Promise<unknown>,
 ) => {
   const { userid } = ctx.params;
   const UsersCollection = ctx.state.UsersCollection;

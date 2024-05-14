@@ -5,7 +5,7 @@
   },
   "imports": {
     "@oak/oak": "jsr:@oak/oak@^16.0.0",
-    "jsonwebtoken": "npm:jsonwebtoken@^9.0.2",
+    "bcrypt": "npm:bcrypt@^5.1.1",
     "mongodb": "npm:mongodb@^6.6.1"
   }
 }

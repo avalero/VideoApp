@@ -5,7 +5,7 @@ import { getVideos } from "./resolvers/videos.ts";
 import { register } from "./resolvers/register.ts";
 import { login } from "./resolvers/login.ts";
 import { fav } from "./resolvers/fav.ts";
-import { UsersModel, VideosModel, connectMongo } from "./mongo.ts";
+import { connectMongo, UsersModel, VideosModel } from "./mongo.ts";
 import { Collection } from "mongodb";
 
 const { UsersCollection, VideosCollection } = await connectMongo();
@@ -19,7 +19,7 @@ router.get("/video/:userid/:videoid", getVideo);
 router.get("/videos/:userid", getVideos);
 router.post("/register", register);
 router.post("/login", login);
-router.post("/fav/:userid/:id", fav);
+router.post("/fav/:userid/:videoid", fav);
 
 const app = new Application<{
   UsersCollection: Collection<UsersModel>;
@@ -37,7 +37,7 @@ app.use(async (context, next) => {
   context.response.headers.set("Access-Control-Allow-Origin", "*");
   context.response.headers.set(
     "Access-Control-Allow-Methods",
-    "GET, POST, PUT, DELETE"
+    "GET, POST, PUT, DELETE",
   );
   context.response.headers.set("Access-Control-Allow-Headers", "Content-Type");
   await next();
