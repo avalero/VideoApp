@@ -1,6 +1,6 @@
 import { RouterContext } from "jsr:@oak/oak@^16.0.0/router";
 import { ContextState } from "../types.ts";
-import bcrypt from "bcrypt";
+import { verify } from "@denorg/scrypt";
 
 export const login = async (
   ctx: RouterContext<
@@ -8,7 +8,7 @@ export const login = async (
     Record<string | number | symbol, never>,
     ContextState
   >,
-  next: () => Promise<unknown>,
+  next: () => Promise<unknown>
 ) => {
   const { email, password } = await ctx.request.body.json();
   const UsersCollection = ctx.state.UsersCollection;
@@ -27,7 +27,7 @@ export const login = async (
   }
 
   // verify hahsed password
-  const validPassword = await bcrypt.compare(password, user.password);
+  const validPassword = await verify(password, user.password);
 
   if (!validPassword) {
     ctx.response.status = 400;
@@ -36,7 +36,11 @@ export const login = async (
   }
 
   ctx.response.status = 200;
-  ctx.response.body = { message: "Success" };
+  ctx.response.body = {
+    email: user.email,
+    name: user.name,
+    id: user._id.toString(),
+  };
 
   return next();
 };

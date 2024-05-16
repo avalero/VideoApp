@@ -1,0 +1,34 @@
+version: '3'
+services:
+  api:
+    image: denoland/deno:latest
+    volumes:
+      - ./:/app # Mount the current directory to /app in the container
+    environment:
+      - MONGO_URL=mongodb://mongo:27017
+      - MONGO_DB=VideoApp
+    command: deno task dev
+    ports:
+      - 8080:8080
+    depends_on:
+      - mongo
+    working_dir: /app/api
+
+  front:
+    image: denoland/deno:latest
+    volumes:
+      - ./:/app # Mount the current directory to /app in the container
+    environment:
+      - API_URL=http://api:8080
+      - JWT_SECRET=secret
+    command: deno task start
+    ports:
+      - 8000:8000
+    depends_on:
+      - api
+    working_dir: /app/front
+
+  mongo:
+    image: mongo
+    ports:
+      - 27017:27017

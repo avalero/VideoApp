@@ -4,6 +4,7 @@
     "inspect": "deno run --env --inspect-brk -A main.ts"
   },
   "imports": {
+    "@denorg/scrypt": "jsr:@denorg/scrypt@^4.4.4",
     "@oak/oak": "jsr:@oak/oak@^16.0.0",
     "bcrypt": "npm:bcrypt@^5.1.1",
     "mongodb": "npm:mongodb@^6.6.1"

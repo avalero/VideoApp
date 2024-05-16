@@ -6,7 +6,7 @@ export type Video = {
   title: string;
   duration: number;
   description: string;
-  url: string;
+  youtubeid: string;
   thumbnail: string;
   date: Date;
 };

@@ -1,6 +1,8 @@
 import { RouterContext } from "jsr:@oak/oak@^16.0.0/router";
-import { ContextState } from "../types.ts";
-import bcrypt from "bcrypt";
+import { ContextState, RegisterResponse } from "../types.ts";
+import registerUser, {
+  REGISTER_EXCEPTIONS,
+} from "../controllers/registeruser.ts";
 
 export const register = async (
   ctx: RouterContext<
@@ -8,9 +10,9 @@ export const register = async (
     Record<string | number | symbol, never>,
     ContextState
   >,
-  next: () => Promise<unknown>,
+  next: () => Promise<unknown>
 ) => {
-  // pwd, email, name in body
+  // password, email, name in body
   const { email, name, password } = await ctx.request.body.json();
   const UsersCollection = ctx.state.UsersCollection;
 
@@ -20,25 +22,22 @@ export const register = async (
     return next();
   }
 
-  const user = await UsersCollection.findOne({ email });
-  if (user) {
-    ctx.response.status = 400;
-    ctx.response.body = { message: "User already exists" };
+  try {
+    const user = await registerUser(UsersCollection, email, password, name);
+    console.log("User registered", user);
+    ctx.response.status = 200;
+    ctx.response.body = { email: user.email, name: user.name, id: user.id };
+    return next();
+  } catch (e) {
+    switch (e.message) {
+      case REGISTER_EXCEPTIONS.USER_ALREADY_EXISTS:
+        ctx.response.status = 400;
+        break;
+      default:
+        ctx.response.status = 500;
+        break;
+    }
+    ctx.response.body = { message: e.message };
     return next();
   }
-
-  // hash password
-  const hashedPassword = await bcrypt.hash(password, 8);
-
-  await UsersCollection.insertOne({
-    email,
-    name,
-    password: hashedPassword,
-    favs: [],
-  });
-
-  ctx.response.status = 200;
-  ctx.response.body = { message: "Success" };
-
-  return next();
 };

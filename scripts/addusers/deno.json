@@ -1,0 +1,11 @@
+{
+  "tasks": {
+    "dev": "deno run --env -A --watch main.ts",
+    "start": "deno run --env -A main.ts"
+  },
+  "imports": {
+    "@denorg/scrypt": "jsr:@denorg/scrypt@^4.4.4",
+    "@std/io": "jsr:@std/io@^0.224.0",
+    "mongodb": "npm:mongodb@^6.6.1"
+  }
+}
