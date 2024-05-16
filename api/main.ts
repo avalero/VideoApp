@@ -3,7 +3,7 @@ import { Router } from "@oak/oak/router";
 import { getVideo } from "./resolvers/video.ts";
 import { getVideos } from "./resolvers/videos.ts";
 import { register } from "./resolvers/register.ts";
-import { login } from "./resolvers/login.ts";
+import { checkuser } from "./resolvers/login.ts";
 import { fav } from "./resolvers/fav.ts";
 import { connectMongo, UsersModel, VideosModel } from "./mongo.ts";
 import { Collection } from "mongodb";
@@ -18,7 +18,7 @@ const router = new Router();
 router.get("/video/:userid/:videoid", getVideo);
 router.get("/videos/:userid", getVideos);
 router.post("/register", register);
-router.post("/login", login);
+router.post("/checkuser", checkuser);
 router.post("/fav/:userid/:videoid", fav);
 
 const app = new Application<{

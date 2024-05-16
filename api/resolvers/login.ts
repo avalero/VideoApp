@@ -2,9 +2,9 @@ import { RouterContext } from "jsr:@oak/oak@^16.0.0/router";
 import { ContextState } from "../types.ts";
 import { verify } from "@denorg/scrypt";
 
-export const login = async (
+export const checkuser = async (
   ctx: RouterContext<
-    "/login",
+    "/checkuser",
     Record<string | number | symbol, never>,
     ContextState
   >,

@@ -31,7 +31,7 @@ export const handler: Handlers = {
     }
 
     const response = await fetch(
-      `${Deno.env.get("API_URL")}/login`, // body
+      `${Deno.env.get("API_URL")}/checkuser`, // body
       {
         method: "POST",
         headers: {
