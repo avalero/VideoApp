@@ -11,6 +11,7 @@ export const config: RouteConfig = {
 
 export const handler: Handlers = {
   POST: async (req: Request, ctx: FreshContext) => {
+    console.log("register handler");
     const url = new URL(req.url);
     const form = await req.formData();
     const email = form.get("email")?.toString() || "";
@@ -44,6 +45,11 @@ export const handler: Handlers = {
       });
     }
 
+    const JWT_SECRET = Deno.env.get("JWT_SECRET");
+    if (!JWT_SECRET) {
+      throw new Error("JWT_SECRET is not set in the environment");
+    }
+
     if (response.status == 200) {
       const data: Omit<User, "password" | "favs"> = await response.json();
       const token = jwt.sign(
@@ -52,7 +58,7 @@ export const handler: Handlers = {
           id: data.id,
           name: data.name,
         },
-        Deno.env.get("JWT_SECRET"),
+        JWT_SECRET,
         {
           expiresIn: "24h",
         },
