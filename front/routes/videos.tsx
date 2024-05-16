@@ -26,6 +26,7 @@ export const handler: Handlers<Data, State> = {
       return ctx.render({ videos: [], userid: "" });
     }
     const videos: Video[] = await response.json();
+
     return ctx.render({ videos, userid });
   },
 };

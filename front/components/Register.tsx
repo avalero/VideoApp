@@ -2,8 +2,8 @@ const Register = () => (
   <div class="register-container">
     <h2>Register</h2>
     <form action="/register" method="POST">
-      <label for="fullname">Full Name</label>
-      <input type="text" id="fullname" name="fullname" required />
+      <label for="name">Full Name</label>
+      <input type="text" id="name" name="name" required />
 
       <label for="email">Email</label>
       <input type="email" id="email" name="email" required />

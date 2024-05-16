@@ -39,7 +39,7 @@ export const getVideos = async (
     return {
       ...rest,
       id: video._id.toString(),
-      fav: user.favs.includes(video.id),
+      fav: user.favs.includes(video._id.toString()),
     };
   });
 
