@@ -10,6 +10,7 @@ type State = {
 
 type Data = {
   video: Video;
+  userid: string;
 };
 
 export const handler: Handlers<Data, State> = {
@@ -29,12 +30,12 @@ export const handler: Handlers<Data, State> = {
       });
     }
     const video: Video = await response.json();
-    return ctx.render({ video });
+    return ctx.render({ video, userid });
   },
 };
 
 const Page = (props: PageProps<Data>) => (
-  <VideoDetail video={props.data.video} />
+  <VideoDetail video={props.data.video} userid={props.data.userid} />
 );
 
 export default Page;

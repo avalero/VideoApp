@@ -4,9 +4,10 @@ import Fav from "../islands/Fav.tsx";
 
 type Props = {
   video: Video;
+  userid: string;
 };
 
-const VideoDetail: FunctionComponent<Props> = ({ video }) => {
+const VideoDetail: FunctionComponent<Props> = ({ video, userid }) => {
   return (
     <div className="video-detail-container">
       <a href="/videos" className="back-button">← Go Back to List</a>
@@ -25,7 +26,7 @@ const VideoDetail: FunctionComponent<Props> = ({ video }) => {
       </div>
       <h2 className="video-detail-title">{video.title}</h2>
       <p className="video-detail-description">{video.description}</p>
-      <Fav id={video.id} fav={video.fav} />
+      <Fav id={video.id} fav={video.fav} userid={userid} />
     </div>
   );
 };

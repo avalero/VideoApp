@@ -4,9 +4,10 @@ import { Video } from "../types.ts";
 
 type Props = {
   videos: Video[];
+  userid: string;
 };
 
-const VideoList: FunctionComponent<Props> = ({ videos }) => {
+const VideoList: FunctionComponent<Props> = ({ videos, userid }) => {
   return (
     <div className="video-list-container">
       {videos.map((video) => (
@@ -25,7 +26,7 @@ const VideoList: FunctionComponent<Props> = ({ videos }) => {
               </p>
             </div>
           </a>
-          <Fav id={video.id} fav={video.fav} />
+          <Fav id={video.id} userid={userid} fav={video.fav} />
         </div>
       ))}
     </div>

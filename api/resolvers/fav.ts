@@ -8,7 +8,7 @@ export const fav = async (
     { userid: string; videoid: string },
     ContextState
   >,
-  next: () => Promise<unknown>,
+  next: () => Promise<unknown>
 ) => {
   const { userid, videoid } = ctx.params;
   const UsersCollection = ctx.state.UsersCollection;
@@ -42,7 +42,7 @@ export const fav = async (
 
   await UsersCollection.updateOne(
     { _id: new ObjectId(userid) },
-    { $set: { favs } },
+    { $set: { favs } }
   );
 
   ctx.response.status = 200;
