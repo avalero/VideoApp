@@ -3,7 +3,7 @@ import { Router } from "@oak/oak/router";
 import { getVideo } from "./resolvers/video.ts";
 import { getVideos } from "./resolvers/videos.ts";
 import { register } from "./resolvers/register.ts";
-import { checkuser } from "./resolvers/login.ts";
+import { checkuser } from "./resolvers/checkuser.ts";
 import { fav } from "./resolvers/fav.ts";
 import { connectMongo, UsersModel, VideosModel } from "./mongo.ts";
 import { Collection } from "mongodb";

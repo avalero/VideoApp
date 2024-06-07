@@ -67,11 +67,14 @@ export const handler: Handlers = {
 
       // create JWT token and set it as a cookie
 
+      console.log("url.hostname", url.hostname);
       setCookie(headers, {
         name: "auth",
         value: token,
         sameSite: "Lax", // this is important to prevent CSRF attacks
-        domain: url.hostname.startsWith(".")?url.hostname.substring(1):url.hostname,
+        domain: url.hostname.startsWith(".")
+          ? url.hostname.substring(1)
+          : url.hostname,
         path: "/",
         secure: true,
       });
