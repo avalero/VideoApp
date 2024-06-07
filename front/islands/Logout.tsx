@@ -1,7 +1,11 @@
 const Logout = () => {
   const onLogOut = () => {
     // remove cookie
-    document.cookie = "auth=;Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+    // domain
+    const domain = window.location.hostname;
+    console.log("domain", domain);
+    document.cookie =
+      `auth=;Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT; domain=${domain}; SameSite=Lax; Secure`;
     // redirect to login
     window.location.href = "/login";
   };
